@@ -32,7 +32,8 @@ class AppointmentController extends Controller
             'customer_name' => 'required',
             'customer_surname' => 'required',
             'customer_email' => 'required',
-            'customer_phone' => 'required'
+            'customer_phone' => 'required',
+            'appointment_time' => 'required'
         ]);
 
         // create a appointment

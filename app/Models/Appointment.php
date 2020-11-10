@@ -11,7 +11,8 @@ class Appointment extends Model
         'customer_name',
         'customer_surname',
         'customer_email',
-        'customer_phone'
+        'customer_phone',
+        'appointment_time'
     ];
     use HasFactory;
 }
