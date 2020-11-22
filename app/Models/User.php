@@ -12,6 +12,8 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,19 +44,18 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @inheritDoc
-     */
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function appointments()
+    {
+        return $this->belongsTo('App\Models\Appointment', 'user_id', 'user_id');
     }
 }

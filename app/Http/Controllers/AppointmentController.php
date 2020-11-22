@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\App;
@@ -33,23 +34,29 @@ class AppointmentController extends Controller
             'customer_surname' => 'required',
             'customer_email' => 'required',
             'customer_phone' => 'required',
-            'appointment_time' => 'required'
         ]);
+
+
 
         // create a appointment
         return Appointment::create($request->all());
     }
 
+    public function getUserAppointment($user_id) {
+        return Appointment::find($user_id);
+//        echo $user_id;
+    }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $appointment_id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($appointment_id)
     {
         // show a appointment
-        return Appointment::find($id);
+        return Appointment::find($appointment_id);
     }
 
     /**
@@ -79,3 +86,4 @@ class AppointmentController extends Controller
         return Appointment::destroy($id);
     }
 }
+

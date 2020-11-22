@@ -17,8 +17,13 @@ use App\Models\User;
 |
 */
 
-Route::resource('appointments', 'App\Http\Controllers\AppointmentController');
+Route::get('user/{user_id}/appointments', function ($user_id) {
 
+//    return Appointment::find($user_id);
+    return Appointment::where('user_id', $user_id)->get();
+});
+
+Route::resource('appointments', 'App\Http\Controllers\AppointmentController');
 
 Route::middleware('auth')->get('/user', function (Request $request) {
     return $request->user();
@@ -26,21 +31,19 @@ Route::middleware('auth')->get('/user', function (Request $request) {
 
 
 // create a user route
-Route::post('/user-create', function (Request $request) {
-    App\Models\User::create([
-        'name' => request('name'),
-        'email' => request('email'),
-        'password' => Hash::make(request('password')),
-    ]);
-});
+Route::post('/user-create', 'App\Http\Controllers\UserController@create');
 
 // login a user
-Route::post('/login', function () {
+Route::post('/login', function (Request $request) {
     $credentials = request()->only(['email','password']);
+
     $token = auth()->attempt($credentials);
     $user = auth()->user();
-    return [$token,$user];
+    return ['jwtToken'=>$token,'user'=>$user];
 });
+
+
+//Route::post('/login', 'App\Http\Controllers\UserController@index');
 
 // get the authenticated user
 Route::middleware('auth:api')->get('/me', function () {
